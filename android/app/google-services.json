@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "34002756696",
+    "firebase_url": "https://find-room-a3aa1.firebaseio.com",
+    "project_id": "find-room-a3aa1",
+    "storage_bucket": "find-room-a3aa1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:34002756696:android:4109f8cf2759e29d38d62d",
+        "android_client_info": {
+          "package_name": "com.example.find_rooms_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "34002756696-0n2o7dll7t9r8qsgl42rcmp2le9fin26.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmimCIRg1a0jY6FgDz0uhkiZ9-O4sOhYs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "34002756696-0n2o7dll7t9r8qsgl42rcmp2le9fin26.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "34002756696-dlirc36f2lkldq8k6fcf8gov1b3tt7c2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.findRoomsApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
