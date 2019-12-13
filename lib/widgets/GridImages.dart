@@ -1,13 +1,15 @@
+import 'package:find_rooms_app/widgets/ImageAspectRatio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class GridImages extends StatelessWidget {
+  final List<dynamic> imageUrls;
+  GridImages({this.imageUrls});
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.green,
-      child: _rowImages(100),
+      child: _rowImages(imageUrls.length),
     );
   }
 
@@ -18,27 +20,23 @@ class GridImages extends StatelessWidget {
         break;
       case 1:
         return Container(
-          height: 170,
-          color: Colors.red,
+          alignment: Alignment.center,
+          child: Image.network(
+            imageUrls[0].toString(),
+            fit: BoxFit.fill,
+          ),
         );
         break;
       case 2:
         return Container(
-          height: 170,
           child: Flex(
             direction: Axis.horizontal,
             children: <Widget>[
-              Flexible(
-                flex: 1,
-                child: Container(
-                  color: Colors.red,
-                ),
+              ImageAspectRatio(
+                imageUrl: imageUrls[0].toString(),
               ),
-              Flexible(
-                flex: 1,
-                child: Container(
-                  color: Colors.orange,
-                ),
+              ImageAspectRatio(
+                imageUrl: imageUrls[1].toString(),
               ),
             ],
           ),
@@ -49,28 +47,51 @@ class GridImages extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                color: Colors.blue,
-                height: 150,
-              ),
-              Container(
-                height: 100,
-                child: Flex(
-                  direction: Axis.horizontal,
-                  children: <Widget>[
-                    Flexible(
-                      flex: 1,
-                      child: Container(
-                        color: Colors.red,
-                      ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: Container(
-                        color: Colors.orange,
-                      ),
-                    ),
-                  ],
+                child: Image.network(
+                  imageUrls[0].toString(),
+                  fit: BoxFit.fill,
                 ),
+              ),
+              Flex(
+                direction: Axis.horizontal,
+                children: <Widget>[
+                  ImageAspectRatio(
+                    imageUrl: imageUrls[1].toString(),
+                  ),
+                  ImageAspectRatio(
+                    imageUrl: imageUrls[2].toString(),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+        break;
+      case 4:
+        return Container(
+          child: Column(
+            children: <Widget>[
+              Flex(
+                direction: Axis.horizontal,
+                children: <Widget>[
+                  ImageAspectRatio(
+                    imageUrl: imageUrls[0].toString(),
+                  ),
+                  ImageAspectRatio(
+                    imageUrl: imageUrls[1].toString(),
+                  ),
+                ],
+              ),
+              Flex(
+                direction: Axis.horizontal,
+                children: <Widget>[
+                  ImageAspectRatio(
+                    imageUrl: imageUrls[2].toString(),
+                  ),
+                  ImageAspectRatio(
+                    imageUrl: imageUrls[3].toString(),
+                  ),
+                ],
               ),
             ],
           ),
@@ -81,55 +102,54 @@ class GridImages extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                color: Colors.blue,
-                height: 170,
                 child: Flex(
                   direction: Axis.horizontal,
                   children: <Widget>[
-                    Flexible(
-                      flex: 1,
-                      child: Container(
-                        color: Colors.red,
-                      ),
+                    ImageAspectRatio(
+                      imageUrl: imageUrls[0].toString(),
                     ),
-                    Flexible(
-                      flex: 1,
-                      child: Container(
-                        color: Colors.orange,
-                      ),
+                    ImageAspectRatio(
+                      imageUrl: imageUrls[1].toString(),
                     ),
                   ],
                 ),
               ),
               Container(
-                height: 100,
                 child: Flex(
                   direction: Axis.horizontal,
                   children: <Widget>[
-                    Flexible(
-                      flex: 1,
-                      child: Container(
-                        color: Colors.blueAccent,
-                      ),
+                    ImageAspectRatio(
+                      imageUrl: imageUrls[2].toString(),
+                    ),
+                    ImageAspectRatio(
+                      imageUrl: imageUrls[3].toString(),
                     ),
                     Flexible(
                       flex: 1,
-                      child: Container(
-                        color: Colors.orange,
-                      ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: Container(
-                        color: Colors.yellow,
+                      child: AspectRatio(
+                        aspectRatio: 1,
                         child: (number - 5) == 0
-                            ? Container()
-                            : Center(
-                                child: Text(
-                                  "+${number - 5}",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.white,
+                            ? Container(
+                                child: ImageAspectRatio(
+                                  imageUrl: imageUrls[4].toString(),
+                                ),
+                              )
+                            : Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.fill,
+                                    image: NetworkImage(
+                                      imageUrls[4].toString(),
+                                    ),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "+${number - 5}",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),

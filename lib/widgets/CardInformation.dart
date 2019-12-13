@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 
 class CardInformation extends StatelessWidget {
   final String title;
+  final TextInputType keyboardType;
   final TextEditingController controller;
-  CardInformation({this.title, this.controller});
+  CardInformation(
+      {this.title,
+      this.controller,
+      this.keyboardType = TextInputType.emailAddress});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,6 +25,7 @@ class CardInformation extends StatelessWidget {
             ),
             Expanded(
               child: TextField(
+                keyboardType: keyboardType,
                 controller: controller,
               ),
             ),

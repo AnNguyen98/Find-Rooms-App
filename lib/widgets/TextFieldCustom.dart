@@ -9,7 +9,9 @@ class TextFieldCustom extends StatelessWidget {
   final Function onTap;
   final IconData icon;
   final TextInputType keyboardType;
+  final bool enabled;
   TextFieldCustom({
+    this.enabled = true,
     this.controller,
     this.placeholder,
     this.obscureText,
@@ -27,8 +29,8 @@ class TextFieldCustom extends StatelessWidget {
         color: Colors.grey.withOpacity(0.4),
         border: Border.all(
           style: BorderStyle.solid,
-          width: 2,
-          color: Colors.white54,
+          width: 1,
+          color: Colors.black,
         ),
         borderRadius: BorderRadius.circular(20),
       ),
@@ -37,11 +39,14 @@ class TextFieldCustom extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                   child: CupertinoTextField(
-                    style: TextStyle(color: Colors.white),
+                    enabled: enabled,
+                    style: TextStyle(color: Colors.black, fontSize: 13),
                     controller: controller,
                     placeholder: placeholder,
                     obscureText: obscureText,
-                    placeholderStyle: TextStyle(color: Colors.white54),
+                    maxLength: 8,
+                    placeholderStyle:
+                        TextStyle(color: Colors.black38, fontSize: 13),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -51,7 +56,7 @@ class TextFieldCustom extends StatelessWidget {
                   child: Icon(
                     icon,
                     size: 20,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   onTap: onTap,
                 ),
@@ -64,8 +69,9 @@ class TextFieldCustom extends StatelessWidget {
               keyboardType: keyboardType,
               controller: controller,
               placeholder: placeholder,
-              style: TextStyle(color: Colors.white),
-              placeholderStyle: TextStyle(color: Colors.white54),
+              enabled: enabled,
+              style: TextStyle(color: Colors.black, fontSize: 13),
+              placeholderStyle: TextStyle(color: Colors.black38, fontSize: 13),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
               ),

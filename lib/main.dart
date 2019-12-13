@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
       ),
       debugShowCheckedModeBanner: false,
       home: GetStart(),
@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
         NewPost.title: (context) => NewPost(),
         Notifications.title: (context) => Notifications(),
         Profile.title: (context) => Profile(),
+        //UserProfile.title: (context) => UserProfile(),
         Register.title: (context) => Register(),
       },
     );

@@ -35,6 +35,10 @@ dependencies:
   firebase_auth:
   firebase_core:
   firebase_database:
+  flutter_spinkit:
+  intl:
+  uuid:
+  path_provider:
 
 
 dev_dependencies:

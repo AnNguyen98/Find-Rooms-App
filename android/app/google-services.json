@@ -1,42 +1,35 @@
 {
   "project_info": {
-    "project_number": "34002756696",
-    "firebase_url": "https://find-room-a3aa1.firebaseio.com",
-    "project_id": "find-room-a3aa1",
-    "storage_bucket": "find-room-a3aa1.appspot.com"
+    "project_number": "878411556663",
+    "firebase_url": "https://finding-rooms.firebaseio.com",
+    "project_id": "finding-rooms",
+    "storage_bucket": "finding-rooms.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:34002756696:android:4109f8cf2759e29d38d62d",
+        "mobilesdk_app_id": "1:878411556663:android:ec198a27dad8cb8c85dcb2",
         "android_client_info": {
           "package_name": "com.example.find_rooms_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "34002756696-0n2o7dll7t9r8qsgl42rcmp2le9fin26.apps.googleusercontent.com",
+          "client_id": "878411556663-fda1es4e0mv4sidclm2klhqva0mma4bd.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCmimCIRg1a0jY6FgDz0uhkiZ9-O4sOhYs"
+          "current_key": "AIzaSyAFLVDcLKFApGqRB4NVKtVU6EdA-eEqAbk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "34002756696-0n2o7dll7t9r8qsgl42rcmp2le9fin26.apps.googleusercontent.com",
+              "client_id": "878411556663-fda1es4e0mv4sidclm2klhqva0mma4bd.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "34002756696-dlirc36f2lkldq8k6fcf8gov1b3tt7c2.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.findRoomsApp"
-              }
             }
           ]
         }

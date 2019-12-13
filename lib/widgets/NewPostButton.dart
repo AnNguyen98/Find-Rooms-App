@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 class NewPostButton extends StatelessWidget {
   final Function onPressedNewPost;
   final Function onPressedAvatar;
+  final ImageProvider avatar;
 
   NewPostButton({
     this.onPressedNewPost,
     this.onPressedAvatar,
+    this.avatar,
   });
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,8 @@ class NewPostButton extends StatelessWidget {
             child: Container(
               margin: EdgeInsets.only(left: 5),
               child: CircleAvatar(
-                backgroundColor: Colors.green,
                 radius: 25,
+                backgroundImage: avatar,
               ),
             ),
           ),
@@ -30,8 +32,9 @@ class NewPostButton extends StatelessWidget {
               height: 45,
               margin: EdgeInsets.symmetric(horizontal: 5),
               decoration: BoxDecoration(
-                  border: Border.all(width: 1, color: Colors.grey),
-                  borderRadius: BorderRadius.circular(30)),
+                border: Border.all(width: 1, color: Colors.grey),
+                borderRadius: BorderRadius.circular(30),
+              ),
               child: MaterialButton(
                 height: 45,
                 shape: RoundedRectangleBorder(

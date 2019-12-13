@@ -1,11 +1,9 @@
-import 'package:find_rooms_app/screens/EditInformation.dart';
 import 'package:find_rooms_app/widgets/CircleButton.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class UserProfile extends StatefulWidget {
-  static String title = "/userProfile";
   @override
   _UserProfileState createState() => _UserProfileState();
 }
@@ -37,16 +35,6 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                   child: CircleAvatar(
                     radius: 60,
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        margin: EdgeInsets.only(left: 90),
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.camera_alt),
-                        ),
-                      ),
-                    ),
                   ),
                 ),
               ),
@@ -88,14 +76,7 @@ class _UserProfileState extends State<UserProfile> {
                 CircleButton(
                   color: Colors.white,
                   backgroundColor: Colors.grey,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditInformation(),
-                      ),
-                    );
-                  },
+                  onPressed: () {},
                   icon: Icons.more_horiz,
                 )
               ],

@@ -1,5 +1,8 @@
+import 'package:find_rooms_app/screens/ForgotPassword.dart';
 import 'package:find_rooms_app/screens/HomePage.dart';
 import 'package:find_rooms_app/screens/Register.dart';
+import 'package:find_rooms_app/ui/uiHelper.dart';
+import 'package:find_rooms_app/until/AuthHelper.dart';
 import 'package:find_rooms_app/widgets/ButtonCustom.dart';
 import 'package:find_rooms_app/widgets/TextFieldCustom.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,6 +20,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController emailController;
   TextEditingController passwordController;
+  final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey<ScaffoldState>();
   bool obscureText = true;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseUser _user;
@@ -32,11 +36,12 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldkey,
       body: Container(
         decoration: BoxDecoration(
-          color: Colors.cyan,
           image: DecorationImage(
             fit: BoxFit.fill,
+            colorFilter: ColorFilter.linearToSrgbGamma(),
             image: AssetImage("images/background.png"),
           ),
         ),
@@ -74,6 +79,27 @@ class _LoginState extends State<Login> {
               placeholder: "Password",
             ),
             Container(
+              margin: EdgeInsets.only(right: 20),
+              alignment: Alignment.topRight,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ForgotPassword(),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Forgot password?",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ),
+            Container(
               margin: EdgeInsets.only(top: 30),
               child: ButtonCustom(
                 title: "Login",
@@ -103,22 +129,52 @@ class _LoginState extends State<Login> {
     });
   }
 
+  _isEmptyValue() {
+    return emailController.text == "" || passwordController.text == "";
+  }
+
+  _showPasswordInvalidUser() {
+    Navigator.pop(context);
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Error"),
+          content: Text(
+              "The password is invalid or the user does not have a password."),
+          actions: <Widget>[
+            MaterialButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
   _handleLogin() async {
+    if (_isEmptyValue()) {
+      UIHelper.showSnackBarWithTitle(_scaffoldkey, "Empty email or password!");
+      return;
+    }
+    if (passwordController.text.length < 8) {
+      UIHelper.showSnackBarWithTitle(_scaffoldkey, "Password == 8 characters!");
+      return;
+    }
+    UIHelper.showLoadingDialog(context);
     AuthResult authResult = await _auth
         .signInWithEmailAndPassword(
             email: emailController.text, password: passwordController.text)
         .catchError((error) {
-      print("login error $error");
+      _showPasswordInvalidUser();
     });
     if (authResult.user != null) {
+      Navigator.pop(context);
       _user = authResult.user;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      _user.getIdToken(refresh: false).then((res) {
-        String userToken = res.token;
-        prefs.setString("user_token", userToken);
-      });
-      prefs.setString("email", _user.email);
-      prefs.setString("uid", _user.uid);
+      await AuthHelper.saveUser(_user, passwordController.text);
       Navigator.push(
         context,
         CupertinoPageRoute(

@@ -21,18 +21,25 @@ class _GetStartState extends State<GetStart> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          image: DecorationImage(
+            fit: BoxFit.fill,
+            image: AssetImage("images/startedBG.png"),
+          ),
+        ),
+        child: ListView(
           children: <Widget>[
-            Container(
-              width: 150,
-              height: 150,
-              margin: EdgeInsets.only(top: 130, bottom: 20),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                image: DecorationImage(
-                  image: AssetImage("images/logo.png"),
+            Center(
+              child: Container(
+                width: 150,
+                height: 150,
+                margin: EdgeInsets.only(top: 130, bottom: 20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  image: DecorationImage(
+                    image: AssetImage("images/logo.png"),
+                  ),
                 ),
               ),
             ),
@@ -43,7 +50,7 @@ class _GetStartState extends State<GetStart> {
                   "Finding rooms",
                   style: TextStyle(
                     fontSize: 35,
-                    color: Colors.black,
+                    color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -55,29 +62,34 @@ class _GetStartState extends State<GetStart> {
                 child: Text(
                   "Join the community to search for student rooms",
                   style: TextStyle(
-                    color: Colors.black54,
+                    color: Colors.white,
                   ),
                 ),
               ),
             ),
-            Container(
-              width: 200,
-              height: 50,
-              decoration: BoxDecoration(
+            Center(
+              child: Container(
+                width: 200,
+                height: 50,
+                decoration: BoxDecoration(
                   color: Colors.greenAccent,
-                  borderRadius: BorderRadius.circular((25))),
-              child: MaterialButton(
-                child: Text("Get started!"),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25)),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    CupertinoPageRoute(
-                      builder: (context) => Login(),
-                    ),
-                  );
-                },
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: MaterialButton(
+                  child: Text(
+                    "Get started!",
+                  ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25)),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      CupertinoPageRoute(
+                        builder: (context) => Login(),
+                      ),
+                    );
+                  },
+                ),
               ),
             )
           ],

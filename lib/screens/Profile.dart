@@ -1,9 +1,15 @@
+import 'dart:io';
+
+import 'package:find_rooms_app/model/User.dart';
+import 'package:find_rooms_app/screens/ChangePassword.dart';
 import 'package:find_rooms_app/screens/EditInformation.dart';
+import 'package:find_rooms_app/ui/uiHelper.dart';
+import 'package:find_rooms_app/until/AuthHelper.dart';
+import 'package:find_rooms_app/until/database.dart';
 import 'package:find_rooms_app/widgets/CircleButton.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:find_rooms_app/widgets/InformationUser.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
   static String title = "/profile";
@@ -12,19 +18,39 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User user;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentUser();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: ListView(
         children: <Widget>[
           Stack(
             children: <Widget>[
               Container(
                 height: 150,
-                color: Colors.green,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: user != null && user.coverUrl != null
+                        ? NetworkImage(user.coverUrl)
+                        : AssetImage("images/cover-image.jpeg"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: IconButton(
+                    onPressed: _updateCoverPhoto,
+                    color: Colors.white,
+                    icon: Icon(FontAwesomeIcons.cameraRetro),
+                  ),
+                ),
               ),
               Container(
                 margin: EdgeInsets.only(top: 90),
@@ -41,13 +67,19 @@ class _ProfileState extends State<Profile> {
                   ),
                   child: CircleAvatar(
                     radius: 60,
+                    backgroundColor: Colors.white,
+                    backgroundImage: user == null
+                        ? AssetImage("images/avatar-default.png")
+                        : NetworkImage(user.avatarUrl),
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
-                        margin: EdgeInsets.only(left: 90),
+                        margin: EdgeInsets.only(left: 80),
                         child: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.camera_alt),
+                          onPressed: _updateAvatar,
+                          color: Colors.grey,
+                          iconSize: 20,
+                          icon: Icon(Icons.add_a_photo),
                         ),
                       ),
                     ),
@@ -61,7 +93,7 @@ class _ProfileState extends State<Profile> {
             margin: EdgeInsets.only(top: 10),
             child: Center(
               child: Text(
-                "An Nguyễn",
+                user != null ? user.fullName : "",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
@@ -76,18 +108,17 @@ class _ProfileState extends State<Profile> {
               children: <Widget>[
                 CircleButton(
                   color: Colors.white,
-                  backgroundColor: Colors.green,
-                  onPressed: () {},
-                  icon: Icons.call,
-                ),
-                CircleButton(
-                  color: Colors.white,
-                  backgroundColor: Colors.green,
-                  onPressed: () {},
-                  iconSize: 20,
-                  icon: false
-                      ? FontAwesomeIcons.userPlus
-                      : FontAwesomeIcons.userCheck,
+                  backgroundColor: Colors.blueGrey,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChangePassword(),
+                      ),
+                    );
+                  },
+                  iconSize: 26,
+                  icon: Icons.more_horiz,
                 ),
                 CircleButton(
                   color: Colors.white,
@@ -106,48 +137,23 @@ class _ProfileState extends State<Profile> {
               ],
             ),
           ),
-          Card(
-            margin: EdgeInsets.only(top: 20, left: 20, right: 20),
-            child: Container(
-              alignment: Alignment.center,
-              height: 50,
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(left: 50, right: 20),
-                    child: Text("Address:"),
-                  ),
-                  Text(
-                    "Đà Nẵng",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
+          InformationUser(
+            title: "Address:",
+            value: user != null ? user.address : "",
           ),
-          Card(
-            margin: EdgeInsets.only(top: 20, left: 20, right: 20),
-            child: Container(
-              alignment: Alignment.center,
-              height: 50,
-              child: Row(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(left: 50, right: 20),
-                    child: Text("Follower:"),
-                  ),
-                  Text(
-                    "60 peoples",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            ),
+          InformationUser(
+            title: "Phone:",
+            value: user != null ? user.phoneNumber : "",
           ),
-          Spacer(),
+          InformationUser(
+            title: "Gender:",
+            value: user != null && user.gender != null && user.gender
+                ? "Male"
+                : "Female",
+          ),
           Container(
             height: 40,
-            margin: EdgeInsets.only(bottom: 10, left: 20, right: 20),
+            margin: EdgeInsets.only(bottom: 10, left: 20, right: 20, top: 30),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: Colors.red, width: 1),
@@ -182,12 +188,26 @@ class _ProfileState extends State<Profile> {
     );
   }
 
+  _updateCoverPhoto() async {
+    File fileImage = await UIHelper.handleGetPhoto();
+    await DatabaseHelper.updateCoverPhoto(fileImage, context);
+  }
+
+  _updateAvatar() async {
+    File fileImage = await UIHelper.handleGetPhoto();
+    await DatabaseHelper.updateAvatar(context, fileImage);
+  }
+
+  _currentUser() async {
+    await DatabaseHelper.getCurrentUser((userRes) {
+      setState(() {
+        user = userRes;
+      });
+    });
+  }
+
   _handleSignOut() async {
-    _auth.signOut();
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString("email", "");
-    prefs.setString("uid", null);
-    prefs.setString("user_token", "");
+    await AuthHelper.signOut();
     Navigator.pop(context);
   }
 }

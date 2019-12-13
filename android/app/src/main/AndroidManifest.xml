@@ -8,7 +8,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="find_rooms_app"
+        android:label="Finding rooms"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

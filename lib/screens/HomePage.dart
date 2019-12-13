@@ -1,8 +1,11 @@
+import 'package:find_rooms_app/model/User.dart';
 import 'package:find_rooms_app/screens/Home.dart';
 import 'package:find_rooms_app/screens/Notifications.dart';
 import 'package:find_rooms_app/screens/Profile.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   static String title = "/homePage";
@@ -12,6 +15,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   TabController controller;
+  DatabaseReference _usersRef;
+  User user;
   List<String> titles = [
     "Home",
     "Notifications",
@@ -26,6 +31,38 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       setState(() {
         title = titles[controller.index];
       });
+    });
+    _currentUser();
+  }
+
+  _currentUser() async {
+    _usersRef = FirebaseDatabase.instance.reference().child("users");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String uid = prefs.getString("uid") ?? null;
+    if (uid == null) {
+      return;
+    }
+    await _usersRef.child(uid).once().then((dataSnapshot) {
+      if (dataSnapshot.value == null) {
+        return;
+      }
+      var userDict = dataSnapshot.value;
+      String avatarUrl = userDict["avatarUrl"];
+      String fullName = userDict["fullName"];
+      String address = userDict["address"];
+      String email = userDict["email"];
+      String phoneNumber = userDict["phoneNumber"];
+      String uid = userDict["uid"];
+      String coverUrl = userDict["coverAvatar"] ?? "";
+      user = User(
+        avatarUrl: avatarUrl,
+        fullName: fullName,
+        address: address,
+        email: email,
+        phoneNumber: phoneNumber,
+        uid: uid,
+        coverUrl: coverUrl,
+      );
     });
   }
 
