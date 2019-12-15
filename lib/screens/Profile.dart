@@ -5,7 +5,7 @@ import 'package:find_rooms_app/screens/ChangePassword.dart';
 import 'package:find_rooms_app/screens/EditInformation.dart';
 import 'package:find_rooms_app/ui/uiHelper.dart';
 import 'package:find_rooms_app/until/AuthHelper.dart';
-import 'package:find_rooms_app/until/database.dart';
+import 'package:find_rooms_app/until/Database.dart';
 import 'package:find_rooms_app/widgets/CircleButton.dart';
 import 'package:find_rooms_app/widgets/InformationUser.dart';
 import 'package:flutter/material.dart';

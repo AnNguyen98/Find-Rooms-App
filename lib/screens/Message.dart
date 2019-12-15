@@ -5,7 +5,7 @@ import 'package:find_rooms_app/model/MessengerModel.dart';
 import 'package:find_rooms_app/model/User.dart';
 import 'package:find_rooms_app/screens/UserProfile.dart';
 import 'package:find_rooms_app/ui/uiHelper.dart';
-import 'package:find_rooms_app/until/database.dart';
+import 'package:find_rooms_app/until/Database.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';

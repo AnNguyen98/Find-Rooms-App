@@ -7,7 +7,7 @@ import 'package:find_rooms_app/screens/Comments.dart';
 import 'package:find_rooms_app/screens/Message.dart';
 import 'package:find_rooms_app/screens/NewPost.dart';
 import 'package:find_rooms_app/ui/uiHelper.dart';
-import 'package:find_rooms_app/until/database.dart';
+import 'package:find_rooms_app/until/Database.dart';
 import 'package:find_rooms_app/widgets/GridImages.dart';
 import 'package:find_rooms_app/widgets/NewPostButton.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -199,7 +199,10 @@ class _HomeState extends State<Home> {
                               child: Row(
                                 children: <Widget>[
                                   IconButton(
-                                    onPressed: _handleLiked,
+                                    onPressed: () {
+                                      _handleLiked(
+                                          posts[index - 1].postId, index - 1);
+                                    },
                                     icon: Icon(FontAwesomeIcons.thumbsUp),
                                   ),
                                   IconButton(
@@ -261,7 +264,18 @@ class _HomeState extends State<Home> {
     );
   }
 
-  _handleLiked() {}
+  _handleLiked(String postId, int index) {
+    _postsRef = FirebaseDatabase.instance.reference().child("posts");
+    _postsRef.child(postId.toString()).once().then((postData) {
+      var post = Post.fromObject(postData.value);
+      post.likeCount += 1;
+      setState(() {
+        posts[index] = post;
+      });
+      _postsRef.child(postId).set(post.toJson());
+      print(post.likeCount);
+    });
+  }
 
   _handleMore() async {}
 

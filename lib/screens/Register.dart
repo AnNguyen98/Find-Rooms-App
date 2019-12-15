@@ -4,7 +4,7 @@ import 'package:find_rooms_app/model/User.dart';
 import 'package:find_rooms_app/screens/HomePage.dart';
 import 'package:find_rooms_app/ui/uiHelper.dart';
 import 'package:find_rooms_app/until/AuthHelper.dart';
-import 'package:find_rooms_app/until/database.dart';
+import 'package:find_rooms_app/until/Database.dart';
 import 'package:find_rooms_app/widgets/ButtonCustom.dart';
 import 'package:find_rooms_app/widgets/TextFieldCustom.dart';
 import 'package:firebase_auth/firebase_auth.dart';

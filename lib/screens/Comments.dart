@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:find_rooms_app/model/Comment.dart';
 import 'package:find_rooms_app/model/User.dart';
 import 'package:find_rooms_app/ui/uiHelper.dart';
-import 'package:find_rooms_app/until/database.dart';
+import 'package:find_rooms_app/until/Database.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
